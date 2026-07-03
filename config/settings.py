@@ -43,7 +43,22 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'storages',
 ]
+
+# S3 버킷 설정 (EC2에 S3 FullAccess IAM 역할이 매핑되어 있으므로 Access Key는 기재 불필요)
+AWS_STORAGE_BUCKET_NAME = 'skn29-django-static-202607031624' # 자신이 실제 생성한 버킷명 기재
+AWS_S3_REGION_NAME = 'ap-northeast-2'
+AWS_QUERYSTRING_AUTH = False 
+
+STORAGES = {
+    "default": {
+        "BACKEND": "storages.backends.s3boto3.S3Boto3Storage",
+    },
+    "staticfiles": {
+        "BACKEND": "storages.backends.s3boto3.S3StaticStorage",
+    },
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
